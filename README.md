@@ -2,48 +2,43 @@
 
 A YouTube-home-feed lookalike for split-testing thumbnails with people you know before publishing. Sister tool of [`../title_tester_poll`](../title_tester_poll/README.md).
 
-Every card shows the **same title, channel, views and duration**. Only the thumbnail changes, so a vote measures the thumbnail and nothing else. The order is shuffled for each visitor.
+Every card shows the **same title, channel, views and duration**. Only the thumbnail changes, so a vote measures the thumbnail and nothing else. The order is shuffled randomly for each visitor.
+
+---
+
+## Active Test: Child Stars Who Became Monsters Behind the Facade
+
+- **Video Title:** The Child Stars Who Became Monsters Behind the Facade
+- **Channel Name:** Hollywood Echoes
+- **Duration Badge:** 20:17
+- **Live URLs:**
+  - `https://loumizhu.github.io/yt-thumbnail-poll/`
+  - `https://loumizhu.github.io/yt-thumbnail-poll/child-stars/`
+  - Share link format: `https://loumizhu.github.io/yt-thumbnail-poll/?voter=YourName`
+
+### Candidate Thumbnails Under Test:
+1. **`V01`** — *De Niro Warned Him · Lillo Brancato Thug* (`Version_01_DeNiro_Warned_Him_Brancato_Thug`)
+2. **`V04`** — *Disney Dumped Him · Bobby Driscoll Peter Pan* (`Version_04_Bobby_Driscoll_Disney_Dumped_Him`)
+3. **`V07`** — *Death Row · Skylar Deleon Power Rangers* (`Version_07_Skylar_Deleon_Death_Row`)
+4. **`V05`** — *Four Pillars Behind The Facade · Multi-Cast* (`Version_05_Four_Pillars_Behind_The_Facade`)
 
 ---
 
 ## What you get in Discord
 
 Each click sends an embed with:
-- The thumbnail picked (ID + label, plus the image itself once the page is hosted on http/https)
-- Voter name (from `?voter=Name`)
+- The thumbnail picked (ID + label, plus the full image preview rendered in Discord)
+- Voter name (from `?voter=Name` or `?name=Name`)
 - Decision speed (seconds from feed load to click)
-- Grid position it was in, and the full order shown (to spot position bias)
-- Device (mobile / desktop)
+- Grid position it was in, and the full presentation sequence (to spot position bias)
+- Device (Mobile / Desktop)
 
-After voting, the person can optionally type **why** they clicked. That comes through as a second Discord message.
+After voting, the voter can optionally submit **why** they clicked. That comes through as a second Discord message with their feedback.
 
-Uses the same Discord webhook as the title poll (base64 in `index.html`). Override per link with `?wh=<url-or-base64>`.
-
----
-
-## Editing the test
-
-All config sits at the top of the `<script>` in `index.html`:
-
-```javascript
-const VIDEO_TITLE  = "They Made Millions as Children. Their Parents Stole Every Cent.";
-const CHANNEL_NAME = "Hollywood Echoes";
-const VIEWS = "184K views", AGE = "3 days ago", DURATION = "23:14";
-
-const THUMBNAILS = [
-  { id: "V15", label: "...", src: "thumbnails/Version_15_....webp" },
-  ...
-];
-```
-
-To test new thumbnails, drop 1280×720 WebP/JPG files into `thumbnails/` and update the `THUMBNAILS` list.
+Uses the channel's Discord webhook (base64 encoded in `index.html`). Can be overridden per link with `?wh=<url-or-base64>`.
 
 ---
 
-## Run / deploy
+## Archived Tests
 
-- **Local:** `python -m http.server 8765` in this folder → open `http://127.0.0.1:8765/?voter=Me`.
-- **GitHub Pages:** push this folder (with `thumbnails/`) to a repo → Settings → Pages → Deploy from `main` / root.
-  Share `https://<user>.github.io/<repo>/?voter=Mike`.
-
-Mobile layout follows the YouTube app (full-width cards, no sidebar). Most friends will open the link on a phone.
+- [`video-02/`](./video-02/): *They Made Millions as Children. Their Parents Stole Every Cent.* (`https://loumizhu.github.io/yt-thumbnail-poll/video-02/`)

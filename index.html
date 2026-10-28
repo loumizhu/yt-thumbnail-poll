@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YouTube</title>
+  <title>YouTube - The Child Stars Who Became Monsters Behind the Facade</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
@@ -147,15 +147,18 @@
 
     .video-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 40px 16px;
-      max-width: 1700px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 40px 24px;
+      max-width: 1200px;
       margin: 0 auto;
       transition: opacity 0.3s ease;
     }
 
-    @media (min-width: 2200px) {
-      .video-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); max-width: 2300px; }
+    @media (min-width: 1600px) {
+      .video-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        max-width: 1800px;
+      }
     }
 
     .yt-card {
@@ -163,6 +166,10 @@
       cursor: pointer;
       user-select: none;
       -webkit-tap-highlight-color: transparent;
+      transition: transform 0.15s ease;
+    }
+    .yt-card:hover {
+      transform: translateY(-2px);
     }
 
     .thumbnail-box {
@@ -172,9 +179,13 @@
       border-radius: 12px;
       overflow: hidden;
       background: #272727;
-      transition: border-radius 0.15s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      transition: border-radius 0.15s ease, box-shadow 0.15s ease;
     }
-    .yt-card:hover .thumbnail-box { border-radius: 0; }
+    .yt-card:hover .thumbnail-box {
+      border-radius: 4px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
+    }
 
     .thumbnail-box img {
       width: 100%; height: 100%;
@@ -184,17 +195,17 @@
     }
 
     .duration-badge {
-      position: absolute; bottom: 6px; right: 6px;
-      background: rgba(0, 0, 0, 0.8);
+      position: absolute; bottom: 8px; right: 8px;
+      background: rgba(0, 0, 0, 0.85);
       color: #fff;
       font-size: 12px; font-weight: 500;
-      padding: 1px 4px;
+      padding: 2px 5px;
       border-radius: 4px;
-      letter-spacing: 0.3px;
+      letter-spacing: 0.4px;
     }
 
     .video-details {
-      display: flex; gap: 12px;
+      display: flex gap: 12px;
       margin-top: 12px;
       position: relative;
       padding-right: 24px;
@@ -207,6 +218,7 @@
       display: flex; align-items: center; justify-content: center;
       font-size: 15px; font-weight: 700; color: #f1d9a8;
       border: 1px solid rgba(255, 255, 255, 0.08);
+      user-select: none;
     }
 
     .video-meta { min-width: 0; }
@@ -237,10 +249,6 @@
     .yt-card:hover .more-btn { opacity: 1; }
 
     /* ---------- Responsive ---------- */
-    @media (max-width: 1100px) {
-      .video-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-
     @media (max-width: 900px) {
       .header-center .search-box { display: none; }
       .header-center { justify-content: flex-end; margin: 0 8px; flex: 1; }
@@ -248,7 +256,6 @@
       .create-btn { padding: 0 8px; }
     }
 
-    /* Mobile app style: full-bleed single column, no sidebar */
     @media (max-width: 640px) {
       :root { --sidebar-w: 0px; }
       nav.mini-guide, .create-btn, .header-end .icon-btn.bell, .menu-btn { display: none; }
@@ -257,7 +264,7 @@
       .header-center { margin: 0; }
       .chip-bar { top: 48px; height: 48px; padding: 0 12px; gap: 8px; }
       main.feed { padding: 100px 0 32px; }
-      .video-grid { grid-template-columns: 1fr; gap: 24px; }
+      .video-grid { grid-template-columns: 1fr; gap: 28px; max-width: 100%; }
       .thumbnail-box, .yt-card:hover .thumbnail-box { border-radius: 0; }
       .video-details { padding: 0 36px 0 12px; }
       .video-title { font-size: 15px; line-height: 21px; }
@@ -270,7 +277,7 @@
     /* ---------- Thank-you view ---------- */
     .thank-you-view {
       display: none;
-      max-width: 560px;
+      max-width: 600px;
       margin: 24px auto;
       text-align: center;
       background: var(--yt-surface);
@@ -300,14 +307,33 @@
     .thank-you-heading { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
     .thank-you-msg { font-size: 15px; color: var(--yt-text-secondary); line-height: 1.5; margin-bottom: 20px; }
 
+    .selected-thumb-container {
+      position: relative;
+      margin-bottom: 22px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid #333;
+    }
+
     .selected-thumb {
       width: 100%;
       aspect-ratio: 16 / 9;
       object-fit: cover;
-      border-radius: 10px;
       display: block;
-      margin-bottom: 22px;
-      border: 1px solid #333;
+    }
+
+    .selected-thumb-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(0, 0, 0, 0.8);
+      color: #ffd700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      border: 1px solid rgba(255, 215, 0, 0.3);
     }
 
     .reason-label { display: block; text-align: left; font-size: 14px; color: var(--yt-text-secondary); margin-bottom: 8px; }
@@ -452,12 +478,15 @@
         <svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
       </div>
       <h2 class="thank-you-heading">Thanks, your pick was recorded!</h2>
-      <p class="thank-you-msg">This is a thumbnail test. This is the one you clicked:</p>
+      <p class="thank-you-msg">This is a blind thumbnail split test. This is the thumbnail you clicked:</p>
 
-      <img class="selected-thumb" id="selectedThumb" alt="Your selected thumbnail">
+      <div class="selected-thumb-container">
+        <img class="selected-thumb" id="selectedThumb" alt="Your selected thumbnail">
+        <div class="selected-thumb-badge" id="selectedThumbBadge">VERSION</div>
+      </div>
 
       <label class="reason-label" for="reasonInput">Optional: what made you click this one?</label>
-      <textarea class="reason-input" id="reasonInput" maxlength="600" placeholder="e.g. the face, the text, the colors..."></textarea>
+      <textarea class="reason-input" id="reasonInput" maxlength="600" placeholder="e.g. the face, the bold text, contrast, emotional intrigue..."></textarea>
 
       <div class="btn-row">
         <button class="btn primary" id="btnSendReason">Send comment</button>
@@ -473,32 +502,50 @@
   </div>
 
   <script>
-    // Discord webhook (base64 so GitHub's secret scanner doesn't auto-revoke it). Same webhook as the title poll.
+    // Discord webhook (base64 encoded so GitHub secret scanners do not auto-revoke it)
     const DISCORD_WEBHOOK_URL = atob("aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTU2MTgzOTQyNDM0ODg4OTEyOC9VQUotOHJOX0MtejAwN3Y4ZHZ4R1k1bk9NZE9uZXRSTnpveG9ScVFTdVVhNmFsczdmY0pzTTR4N3NCS2J6WC13QXktVw==");
 
     // =========================================================================
-    // 1. SHARED PACKAGING (same title + metrics on every card so ONLY the thumbnail varies)
+    // 1. SHARED VIDEO METADATA (identical for all cards to strictly test thumbnail CTR)
     // =========================================================================
-    const VIDEO_TITLE  = "They Made Millions as Children. Their Parents Stole Every Cent.";
+    const VIDEO_TITLE  = "The Child Stars Who Became Monsters Behind the Facade";
     const CHANNEL_NAME = "Hollywood Echoes";
     const VIEWS        = "184K views";
     const AGE          = "3 days ago";
-    const DURATION     = "23:14";
+    const DURATION     = "20:17";
 
     // =========================================================================
-    // 2. THUMBNAILS TO TEST
+    // 2. CANDIDATE THUMBNAILS TO TEST
     // =========================================================================
     const THUMBNAILS = [
-      { id: "V15", label: "Coogan + Mother Inset (She Spent It) A",  src: "thumbnails/Version_15_Coogan_Mother_Inset_She_Spent_It.webp" },
-      { id: "V16", label: "Coogan + Mother Inset (She Spent It) B",  src: "thumbnails/Version_16_Coogan_Mother_Inset_She_Spent_It.webp" },
-      { id: "V18", label: "Main Cast Grid (Innocence Lost)",         src: "thumbnails/Version_18_Main_Cast_Grid_Innocence_Lost.webp" },
-      { id: "V21", label: "Drew Before/After (Divorced Her Mom)",    src: "thumbnails/Version_21_Drew_Before_After_Divorced_Her_Mom.webp" },
-      { id: "V22", label: "Main Cast Four Columns (Their Own Parents)", src: "thumbnails/Version_22_Main_Cast_Four_Columns_Their_Own_Parents.webp" },
-      { id: "V23", label: "Main Cast Hero (Evidence Prints)",        src: "thumbnails/Version_23_Main_Cast_Hero_Evidence_Prints.webp" }
+      {
+        id: "V01",
+        label: "De Niro Warned Him · Lillo Brancato Thug",
+        src: "thumbnails/Version_01_DeNiro_Warned_Him_Brancato_Thug.webp",
+        fullPng: "thumbnails/Version_01_DeNiro_Warned_Him_Brancato_Thug.png"
+      },
+      {
+        id: "V04",
+        label: "Disney Dumped Him · Bobby Driscoll Peter Pan",
+        src: "thumbnails/Version_04_Bobby_Driscoll_Disney_Dumped_Him.webp",
+        fullPng: "thumbnails/Version_04_Bobby_Driscoll_Disney_Dumped_Him.png"
+      },
+      {
+        id: "V07",
+        label: "Death Row · Skylar Deleon Power Rangers",
+        src: "thumbnails/Version_07_Skylar_Deleon_Death_Row.webp",
+        fullPng: "thumbnails/Version_07_Skylar_Deleon_Death_Row.png"
+      },
+      {
+        id: "V05",
+        label: "Four Pillars Behind The Facade · Multi-Cast",
+        src: "thumbnails/Version_05_Four_Pillars_Behind_The_Facade.webp",
+        fullPng: "thumbnails/Version_05_Four_Pillars_Behind_The_Facade.png"
+      }
     ];
 
     // =========================================================================
-    // RUNTIME
+    // RUNTIME & LOGIC
     // =========================================================================
     const urlParams = new URLSearchParams(window.location.search);
     const voterName = urlParams.get('voter') || urlParams.get('name') || 'Anonymous';
@@ -513,7 +560,7 @@
       document.getElementById('userAvatar').textContent = voterName.trim().charAt(0) || 'Y';
     }
 
-    // Preload so every thumbnail appears at the same moment (no "first loaded wins" bias)
+    // Preload so all thumbnails pop in at the exact same instant (zero first-loaded bias)
     const preloads = THUMBNAILS.map(t => new Promise(resolve => {
       const img = new Image();
       img.onload = img.onerror = resolve;
@@ -545,14 +592,17 @@
 
         card.innerHTML = `
           <div class="thumbnail-box">
-            <img src="${item.src}" alt="" draggable="false">
+            <img src="${item.src}" alt="${escapeHtml(item.label)}" draggable="false">
             <div class="duration-badge">${DURATION}</div>
           </div>
           <div class="video-details">
-            <div class="channel-avatar">${escapeHtml(CHANNEL_NAME.charAt(0))}</div>
+            <div class="channel-avatar">H</div>
             <div class="video-meta">
               <h3 class="video-title">${escapeHtml(VIDEO_TITLE)}</h3>
-              <div class="channel-name">${escapeHtml(CHANNEL_NAME)}</div>
+              <div class="channel-name">
+                ${escapeHtml(CHANNEL_NAME)}
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zM9.8 17.3l-4.2-4.1 1.4-1.4 2.8 2.7 7.8-7.7 1.4 1.4-9.2 9.1z"/></svg>
+              </div>
               <div class="video-metrics">${VIEWS} &bull; ${AGE}</div>
             </div>
             <div class="icon-btn more-btn">
@@ -580,7 +630,8 @@
       setTimeout(() => {
         grid.style.display = 'none';
         document.getElementById('chipBar').style.visibility = 'hidden';
-        document.getElementById('selectedThumb').src = item.src;
+        document.getElementById('selectedThumb').src = item.fullPng || item.src;
+        document.getElementById('selectedThumbBadge').textContent = `${item.id}: ${item.label}`;
         document.getElementById('reasonInput').value = '';
         document.getElementById('btnSendReason').disabled = false;
         document.getElementById('thankYouView').style.display = 'block';
@@ -595,7 +646,7 @@
 
     function voteEmbed(item, position, dwellTimeSec) {
       const embed = {
-        title: '🖼️ New Thumbnail Vote',
+        title: '🎬 Child Stars - New Thumbnail Vote',
         color: 0xFF0000,
         fields: [
           { name: 'Selected Thumbnail', value: `**${item.id}** · ${item.label}` },
@@ -605,10 +656,10 @@
           { name: 'Device', value: isMobile ? 'Mobile' : 'Desktop', inline: true },
           { name: 'Order Shown', value: currentOrder.map(t => t.id).join(' → ') }
         ],
-        footer: { text: 'YouTube Thumbnail Test' },
+        footer: { text: 'YouTube Thumbnail Test · Child Stars Behind the Facade' },
         timestamp: new Date().toISOString()
       };
-      const imgUrl = absoluteUrl(item.src);
+      const imgUrl = absoluteUrl(item.fullPng || item.src);
       if (imgUrl) embed.image = { url: imgUrl };
       return embed;
     }
@@ -659,16 +710,16 @@
       btn.disabled = true;
       showToast('Sending comment...', true);
       await sendToDiscord({
-        title: '💬 Thumbnail Vote Comment',
+        title: '💬 Thumbnail Feedback Comment',
         color: 0x3EA6FF,
         fields: [
           { name: 'Thumbnail', value: `**${lastVote.item.id}** · ${lastVote.item.label}` },
           { name: 'Voter', value: `\`${voterName}\``, inline: true },
-          { name: 'Comment', value: text.slice(0, 1000) }
+          { name: 'Feedback', value: text.slice(0, 1000) }
         ],
         timestamp: new Date().toISOString()
       });
-      showToast('Thanks for the comment!', false);
+      showToast('Thanks for your feedback!', false);
       setTimeout(hideToast, 1800);
     };
 

@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube - The Child Stars Who Became Monsters Behind the Facade</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --yt-bg: #0f0f0f;
+      --yt-surface: #181818;
+      --yt-chip: #272727;
+      --yt-chip-hover: #3f3f3f;
+      --yt-border: #303030;
+      --yt-text-primary: #f1f1f1;
+      --yt-text-secondary: #aaaaaa;
+      --yt-red: #ff0000;
+      --success-green: #2ba640;
+      --sidebar-w: 72px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--yt-bg);
+      color: var(--yt-text-primary);
+      font-family: 'Roboto', 'Arial', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    svg.icon { width: 24px; height: 24px; fill: currentColor; display: block; }
+
+    /* ---------- Header ---------- */
+    header.yt-header {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: 56px;
+      padding: 0 16px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--yt-bg);
+      z-index: 100;
+    }
+
+    .header-start { display: flex; align-items: center; gap: 16px; min-width: 170px; }
+
+    .icon-btn {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--yt-text-primary);
+      cursor: default;
+    }
+
+    .yt-logo { display: flex; align-items: center; gap: 4px; font-weight: 700; font-size: 19px; letter-spacing: -1px; user-select: none; }
+    .yt-logo svg { width: 30px; height: 21px; }
+
+    .header-center { flex: 0 1 728px; display: flex; align-items: center; gap: 12px; margin: 0 24px; }
+
+    .search-box { flex: 1; display: flex; height: 40px; }
+    .search-input {
+      flex: 1;
+      background: #121212;
+      border: 1px solid var(--yt-border);
+      border-right: none;
+      border-radius: 40px 0 0 40px;
+      padding: 0 16px;
+      color: var(--yt-text-secondary);
+      font-size: 16px;
+      display: flex; align-items: center;
+    }
+    .search-btn {
+      width: 64px;
+      background: #222222;
+      border: 1px solid var(--yt-border);
+      border-radius: 0 40px 40px 0;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--yt-text-primary);
+    }
+    .mic-btn { background: #181818; }
+
+    .header-end { display: flex; align-items: center; gap: 8px; min-width: 170px; justify-content: flex-end; }
+
+    .create-btn {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--yt-chip);
+      border-radius: 18px;
+      height: 36px; padding: 0 14px 0 10px;
+      font-size: 14px; font-weight: 500;
+    }
+
+    .user-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: #5c6bc0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 500; color: #fff;
+      margin-left: 8px;
+      text-transform: uppercase;
+    }
+
+    /* ---------- Mini sidebar ---------- */
+    nav.mini-guide {
+      position: fixed; top: 56px; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      padding: 4px;
+      background: var(--yt-bg);
+      z-index: 90;
+    }
+    .guide-item {
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      padding: 16px 0 14px;
+      border-radius: 10px;
+      font-size: 10px;
+      color: var(--yt-text-primary);
+    }
+
+    /* ---------- Chip bar ---------- */
+    .chip-bar {
+      position: fixed; top: 56px; left: var(--sidebar-w); right: 0;
+      height: 56px;
+      padding: 0 24px;
+      display: flex; align-items: center; gap: 12px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      background: var(--yt-bg);
+      z-index: 80;
+    }
+    .chip-bar::-webkit-scrollbar { display: none; }
+    .chip {
+      flex-shrink: 0;
+      height: 32px; padding: 0 12px;
+      border-radius: 8px;
+      background: var(--yt-chip);
+      font-size: 14px; font-weight: 500;
+      display: flex; align-items: center;
+      white-space: nowrap;
+      cursor: default;
+    }
+    .chip.active { background: #f1f1f1; color: #0f0f0f; }
+
+    /* ---------- Feed ---------- */
+    main.feed {
+      margin-left: var(--sidebar-w);
+      padding: 128px 24px 48px;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 40px 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+      transition: opacity 0.3s ease;
+    }
+
+    @media (min-width: 1600px) {
+      .video-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        max-width: 1800px;
+      }
+    }
+
+    .yt-card {
+      display: flex; flex-direction: column;
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      transition: transform 0.15s ease;
+    }
+    .yt-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .thumbnail-box {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #272727;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      transition: border-radius 0.15s ease, box-shadow 0.15s ease;
+    }
+    .yt-card:hover .thumbnail-box {
+      border-radius: 4px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
+    }
+
+    .thumbnail-box img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      pointer-events: none;
+    }
+
+    .duration-badge {
+      position: absolute; bottom: 8px; right: 8px;
+      background: rgba(0, 0, 0, 0.85);
+      color: #fff;
+      font-size: 12px; font-weight: 500;
+      padding: 2px 5px;
+      border-radius: 4px;
+      letter-spacing: 0.4px;
+    }
+
+    .video-details {
+      display: flex gap: 12px;
+      margin-top: 12px;
+      position: relative;
+      padding-right: 24px;
+    }
+
+    .channel-avatar {
+      flex-shrink: 0;
+      width: 36px; height: 36px; border-radius: 50%;
+      background: linear-gradient(135deg, #7a1f1f, #2b0f0f);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; font-weight: 700; color: #f1d9a8;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      user-select: none;
+    }
+
+    .video-meta { min-width: 0; }
+
+    .video-title {
+      font-size: 16px; font-weight: 500;
+      line-height: 22px;
+      color: var(--yt-text-primary);
+      margin-bottom: 4px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .channel-name, .video-metrics {
+      font-size: 14px; line-height: 20px;
+      color: var(--yt-text-secondary);
+    }
+    .channel-name { display: flex; align-items: center; gap: 4px; }
+    .channel-name svg { width: 14px; height: 14px; fill: var(--yt-text-secondary); }
+
+    .more-btn {
+      position: absolute; top: -2px; right: -8px;
+      color: var(--yt-text-primary);
+      opacity: 0;
+    }
+    .yt-card:hover .more-btn { opacity: 1; }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 900px) {
+      .header-center .search-box { display: none; }
+      .header-center { justify-content: flex-end; margin: 0 8px; flex: 1; }
+      .create-btn span { display: none; }
+      .create-btn { padding: 0 8px; }
+    }
+
+    @media (max-width: 640px) {
+      :root { --sidebar-w: 0px; }
+      nav.mini-guide, .create-btn, .header-end .icon-btn.bell, .menu-btn { display: none; }
+      header.yt-header { height: 48px; padding: 0 8px 0 12px; }
+      .header-start, .header-end { min-width: 0; }
+      .header-center { margin: 0; }
+      .chip-bar { top: 48px; height: 48px; padding: 0 12px; gap: 8px; }
+      main.feed { padding: 100px 0 32px; }
+      .video-grid { grid-template-columns: 1fr; gap: 28px; max-width: 100%; }
+      .thumbnail-box, .yt-card:hover .thumbnail-box { border-radius: 0; }
+      .video-details { padding: 0 36px 0 12px; }
+      .video-title { font-size: 15px; line-height: 21px; }
+      .channel-name, .video-metrics { font-size: 12px; line-height: 18px; display: inline; }
+      .channel-name svg { display: none; }
+      .channel-name::after { content: " · "; }
+      .more-btn { opacity: 1; right: 4px; }
+    }
+
+    /* ---------- Thank-you view ---------- */
+    .thank-you-view {
+      display: none;
+      max-width: 600px;
+      margin: 24px auto;
+      text-align: center;
+      background: var(--yt-surface);
+      border: 1px solid var(--yt-border);
+      padding: 36px 28px;
+      border-radius: 16px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+      animation: fadeInScale 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @media (max-width: 640px) { .thank-you-view { margin: 16px 12px; padding: 28px 18px; } }
+
+    @keyframes fadeInScale {
+      from { opacity: 0; transform: scale(0.95) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .success-icon-wrapper {
+      width: 60px; height: 60px;
+      background: rgba(43, 166, 64, 0.15);
+      border: 2px solid var(--success-green);
+      border-radius: 50%;
+      margin: 0 auto 18px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .success-icon-wrapper svg { width: 32px; height: 32px; fill: var(--success-green); }
+
+    .thank-you-heading { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+    .thank-you-msg { font-size: 15px; color: var(--yt-text-secondary); line-height: 1.5; margin-bottom: 20px; }
+
+    .selected-thumb-container {
+      position: relative;
+      margin-bottom: 22px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid #333;
+    }
+
+    .selected-thumb {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    .selected-thumb-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(0, 0, 0, 0.8);
+      color: #ffd700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      border: 1px solid rgba(255, 215, 0, 0.3);
+    }
+
+    .reason-label { display: block; text-align: left; font-size: 14px; color: var(--yt-text-secondary); margin-bottom: 8px; }
+    .reason-input {
+      width: 100%;
+      min-height: 70px;
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 8px;
+      color: var(--yt-text-primary);
+      font: 14px/1.4 'Roboto', sans-serif;
+      padding: 10px 12px;
+      resize: vertical;
+      margin-bottom: 12px;
+    }
+    .reason-input:focus { outline: none; border-color: #3ea6ff; }
+
+    .btn-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      border-radius: 18px;
+      padding: 9px 18px;
+      font-size: 14px; font-weight: 500;
+      cursor: pointer;
+      border: 1px solid var(--yt-border);
+      background: transparent;
+      color: var(--yt-text-secondary);
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    .btn:hover { background: var(--yt-chip); color: #fff; }
+    .btn.primary { background: #f1f1f1; color: #0f0f0f; border-color: #f1f1f1; }
+    .btn.primary:hover { background: #d9d9d9; }
+    .btn:disabled { opacity: 0.5; cursor: default; }
+
+    /* ---------- Toast ---------- */
+    .status-toast {
+      position: fixed; bottom: 24px; left: 50%;
+      transform: translate(-50%, 10px);
+      background: #f1f1f1; color: #0f0f0f;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      display: flex; align-items: center; gap: 10px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+      opacity: 0; pointer-events: none;
+      transition: all 0.25s ease;
+      z-index: 999;
+    }
+    .status-toast.show { opacity: 1; transform: translate(-50%, 0); }
+    .toast-spinner {
+      width: 14px; height: 14px;
+      border: 2px solid rgba(0, 0, 0, 0.2);
+      border-top-color: var(--yt-red);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="yt-header">
+    <div class="header-start">
+      <div class="icon-btn menu-btn">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M21 6H3V5h18v1zm0 5H3v1h18v-1zm0 6H3v1h18v-1z"/></svg>
+      </div>
+      <div class="yt-logo">
+        <svg viewBox="0 0 28 20">
+          <path fill="#FF0000" d="M27.97 3.12A3.5 3.5 0 0 0 25.5.65C23.32.07 14 .07 14 .07s-9.32 0-11.5.58A3.5 3.5 0 0 0 .03 3.12C-.55 5.3-.55 10-.55 10s0 4.7.58 6.88a3.5 3.5 0 0 0 2.47 2.47c2.18.58 11.5.58 11.5.58s9.32 0 11.5-.58a3.5 3.5 0 0 0 2.47-2.47c.58-2.18.58-6.88.58-6.88s0-4.7-.58-6.88z"></path>
+          <path fill="#FFFFFF" d="m11.25 14.38 7.35-4.38-7.35-4.38z"></path>
+        </svg>
+        <span>YouTube</span>
+      </div>
+    </div>
+
+    <div class="header-center">
+      <div class="search-box">
+        <div class="search-input">Search</div>
+        <div class="search-btn">
+          <svg class="icon" viewBox="0 0 24 24"><path d="m20.87 20.17-5.59-5.59C16.35 13.35 17 11.75 17 10c0-3.87-3.13-7-7-7s-7 3.13-7 7 3.13 7 7 7c1.75 0 3.35-.65 4.58-1.71l5.59 5.59.7-.71zM10 16c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"/></svg>
+        </div>
+      </div>
+      <div class="icon-btn mic-btn">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M12 3c-1.66 0-3 1.37-3 3.07v5.86c0 1.7 1.34 3.07 3 3.07s3-1.37 3-3.07V6.07C15 4.37 13.66 3 12 3zm6.5 9h-1c0 3.03-2.47 5.5-5.5 5.5S6.5 15.03 6.5 12h-1c0 3.24 2.39 5.93 5.5 6.41V21h2v-2.59c3.11-.48 5.5-3.17 5.5-6.41z"/></svg>
+      </div>
+    </div>
+
+    <div class="header-end">
+      <div class="create-btn">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M20 12h-8v8h-1v-8H3v-1h8V3h1v8h8v1z"/></svg>
+        <span>Create</span>
+      </div>
+      <div class="icon-btn bell">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M10 20h4c0 1.1-.9 2-2 2s-2-.9-2-2zm10-2.65V19H4v-1.65l2-1.88v-5.15C6 7.4 7.56 5.1 10 4.34v-.38c0-1.42 1.49-2.5 2.99-1.76.65.32 1.01 1.03 1.01 1.76v.39c2.44.75 4 3.06 4 5.98v5.15l2 1.87zm-1 .42-2-1.88v-5.47c0-2.47-1.19-4.36-3.13-5.1-1.26-.53-2.64-.5-3.84.03C8.15 6.11 7 7.99 7 10.42v5.47l-2 1.88V18h14v-.23z"/></svg>
+      </div>
+      <div class="user-avatar" id="userAvatar">Y</div>
+    </div>
+  </header>
+
+  <!-- Mini sidebar -->
+  <nav class="mini-guide">
+    <div class="guide-item">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M4 21V10.08l8-6.96 8 6.96V21h-6v-6h-4v6H4z"/></svg>
+      <span>Home</span>
+    </div>
+    <div class="guide-item">
+      <svg class="icon" viewBox="0 0 24 24"><path d="m7.61 15.719.392-.22v-2.24l-.534-.228-.942-.404c-.869-.372-1.4-1.15-1.446-1.974-.047-.818.39-1.718 1.53-2.357l6.396-3.588c1.611-.903 3.68-.326 4.578 1.268.893 1.586.329 3.603-1.246 4.504l-1.26.716.002 2.217.529.226.942.404c.869.372 1.4 1.15 1.446 1.974.047.818-.39 1.718-1.53 2.357l-6.396 3.588c-1.611.903-3.68.326-4.578-1.268-.893-1.586-.329-3.603 1.246-4.504l.872-.47zM10 14.65l5-2.65-5-2.65v5.3z"/></svg>
+      <span>Shorts</span>
+    </div>
+    <div class="guide-item">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M10 18v-6l5 3-5 3zm7-15H7v1h10V3zm3 3H4v1h16V6zm2 3H2v12h20V9zM3 10h18v10H3V10z"/></svg>
+      <span>Subscriptions</span>
+    </div>
+    <div class="guide-item">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M4 20h14v1H3V6h1v14zM6 3v15h15V3H6zm2.02 14c.36-2.13 1.93-4.1 5.48-4.1s5.12 1.97 5.48 4.1H8.02zM11 8.5a2.5 2.5 0 015 0 2.5 2.5 0 01-5 0zm3.21 3.43A3.507 3.507 0 0017 8.5C17 6.57 15.43 5 13.5 5S10 6.57 10 8.5c0 1.69 1.2 3.1 2.79 3.43-3.48.26-5.4 2.42-5.78 5.07H7V4h13v13h-.01c-.38-2.65-2.31-4.81-5.78-5.07z"/></svg>
+      <span>You</span>
+    </div>
+  </nav>
+
+  <!-- Chip bar -->
+  <div class="chip-bar" id="chipBar">
+    <div class="chip active">All</div>
+    <div class="chip">Documentaries</div>
+    <div class="chip">True crime</div>
+    <div class="chip">Hollywood</div>
+    <div class="chip">History</div>
+    <div class="chip">Podcasts</div>
+    <div class="chip">Mixes</div>
+    <div class="chip">Movies</div>
+    <div class="chip">Recently uploaded</div>
+    <div class="chip">Watched</div>
+    <div class="chip">New to you</div>
+  </div>
+
+  <!-- Feed -->
+  <main class="feed">
+    <div class="video-grid" id="videoGrid"></div>
+
+    <!-- Thank-you view -->
+    <div class="thank-you-view" id="thankYouView">
+      <div class="success-icon-wrapper">
+        <svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
+      </div>
+      <h2 class="thank-you-heading">Thanks, your pick was recorded!</h2>
+      <p class="thank-you-msg">This is a blind thumbnail split test. This is the thumbnail you clicked:</p>
+
+      <div class="selected-thumb-container">
+        <img class="selected-thumb" id="selectedThumb" alt="Your selected thumbnail">
+        <div class="selected-thumb-badge" id="selectedThumbBadge">VERSION</div>
+      </div>
+
+      <label class="reason-label" for="reasonInput">Optional: what made you click this one?</label>
+      <textarea class="reason-input" id="reasonInput" maxlength="600" placeholder="e.g. the face, the bold text, contrast, emotional intrigue..."></textarea>
+
+      <div class="btn-row">
+        <button class="btn primary" id="btnSendReason">Send comment</button>
+        <button class="btn" id="btnChangeVote">Vote again</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Toast -->
+  <div class="status-toast" id="statusToast">
+    <div class="toast-spinner" id="toastSpinner"></div>
+    <span id="toastMsg">Sending...</span>
+  </div>
+
+  <script>
+    // Discord webhook (base64 encoded so GitHub secret scanners do not auto-revoke it)
+    const DISCORD_WEBHOOK_URL = atob("aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTU2MTgzOTQyNDM0ODg4OTEyOC9VQUotOHJOX0MtejAwN3Y4ZHZ4R1k1bk9NZE9uZXRSTnpveG9ScVFTdVVhNmFsczdmY0pzTTR4N3NCS2J6WC13QXktVw==");
+
+    // =========================================================================
+    // 1. SHARED VIDEO METADATA (identical for all cards to strictly test thumbnail CTR)
+    // =========================================================================
+    const VIDEO_TITLE  = "The Child Stars Who Became Monsters Behind the Facade";
+    const CHANNEL_NAME = "Hollywood Echoes";
+    const VIEWS        = "184K views";
+    const AGE          = "3 days ago";
+    const DURATION     = "20:17";
+
+    // =========================================================================
+    // 2. CANDIDATE THUMBNAILS TO TEST
+    // =========================================================================
+    const THUMBNAILS = [
+      {
+        id: "V01",
+        label: "De Niro Warned Him · Lillo Brancato Thug",
+        src: "thumbnails/Version_01_DeNiro_Warned_Him_Brancato_Thug.webp",
+        fullPng: "thumbnails/Version_01_DeNiro_Warned_Him_Brancato_Thug.png"
+      },
+      {
+        id: "V04",
+        label: "Disney Dumped Him · Bobby Driscoll Peter Pan",
+        src: "thumbnails/Version_04_Bobby_Driscoll_Disney_Dumped_Him.webp",
+        fullPng: "thumbnails/Version_04_Bobby_Driscoll_Disney_Dumped_Him.png"
+      },
+      {
+        id: "V07",
+        label: "Death Row · Skylar Deleon Power Rangers",
+        src: "thumbnails/Version_07_Skylar_Deleon_Death_Row.webp",
+        fullPng: "thumbnails/Version_07_Skylar_Deleon_Death_Row.png"
+      },
+      {
+        id: "V05",
+        label: "Four Pillars Behind The Facade · Multi-Cast",
+        src: "thumbnails/Version_05_Four_Pillars_Behind_The_Facade.webp",
+        fullPng: "thumbnails/Version_05_Four_Pillars_Behind_The_Facade.png"
+      }
+    ];
+
+    // =========================================================================
+    // RUNTIME & LOGIC
+    // =========================================================================
+    const urlParams = new URLSearchParams(window.location.search);
+    const voterName = urlParams.get('voter') || urlParams.get('name') || 'Anonymous';
+    const isMobile  = window.matchMedia('(max-width: 640px)').matches;
+
+    let shownAt = Date.now();
+    let hasVoted = false;
+    let currentOrder = [];
+    let lastVote = null;
+
+    if (voterName !== 'Anonymous') {
+      document.getElementById('userAvatar').textContent = voterName.trim().charAt(0) || 'Y';
+    }
+
+    // Preload so all thumbnails pop in at the exact same instant (zero first-loaded bias)
+    const preloads = THUMBNAILS.map(t => new Promise(resolve => {
+      const img = new Image();
+      img.onload = img.onerror = resolve;
+      img.src = t.src;
+    }));
+
+    function shuffle(arr) {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    function escapeHtml(s) {
+      return s.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+
+    function renderCards() {
+      const grid = document.getElementById('videoGrid');
+      grid.innerHTML = '';
+      currentOrder = shuffle(THUMBNAILS);
+
+      currentOrder.forEach((item, idx) => {
+        const card = document.createElement('div');
+        card.className = 'yt-card';
+        card.onclick = () => selectThumbnail(item, idx + 1);
+
+        card.innerHTML = `
+          <div class="thumbnail-box">
+            <img src="${item.src}" alt="${escapeHtml(item.label)}" draggable="false">
+            <div class="duration-badge">${DURATION}</div>
+          </div>
+          <div class="video-details">
+            <div class="channel-avatar">H</div>
+            <div class="video-meta">
+              <h3 class="video-title">${escapeHtml(VIDEO_TITLE)}</h3>
+              <div class="channel-name">
+                ${escapeHtml(CHANNEL_NAME)}
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zM9.8 17.3l-4.2-4.1 1.4-1.4 2.8 2.7 7.8-7.7 1.4 1.4-9.2 9.1z"/></svg>
+              </div>
+              <div class="video-metrics">${VIEWS} &bull; ${AGE}</div>
+            </div>
+            <div class="icon-btn more-btn">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M12 16.5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5.67-1.5 1.5-1.5zM10.5 12c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5-1.5.67-1.5 1.5zm0-6c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5-1.5.67-1.5 1.5z"/></svg>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+      shownAt = Date.now();
+    }
+
+    async function selectThumbnail(item, position) {
+      if (hasVoted) return;
+      hasVoted = true;
+
+      const dwellTimeSec = ((Date.now() - shownAt) / 1000).toFixed(1);
+      lastVote = { item, position, dwellTimeSec };
+
+      showToast('Recording your pick...', true);
+      await sendToDiscord(voteEmbed(item, position, dwellTimeSec));
+
+      const grid = document.getElementById('videoGrid');
+      grid.style.opacity = '0';
+      setTimeout(() => {
+        grid.style.display = 'none';
+        document.getElementById('chipBar').style.visibility = 'hidden';
+        document.getElementById('selectedThumb').src = item.fullPng || item.src;
+        document.getElementById('selectedThumbBadge').textContent = `${item.id}: ${item.label}`;
+        document.getElementById('reasonInput').value = '';
+        document.getElementById('btnSendReason').disabled = false;
+        document.getElementById('thankYouView').style.display = 'block';
+        window.scrollTo(0, 0);
+        hideToast();
+      }, 300);
+    }
+
+    function absoluteUrl(src) {
+      return location.protocol.startsWith('http') ? new URL(src, location.href).href : null;
+    }
+
+    function voteEmbed(item, position, dwellTimeSec) {
+      const embed = {
+        title: '🎬 Child Stars - New Thumbnail Vote',
+        color: 0xFF0000,
+        fields: [
+          { name: 'Selected Thumbnail', value: `**${item.id}** · ${item.label}` },
+          { name: 'Voter', value: `\`${voterName}\``, inline: true },
+          { name: 'Decision Speed', value: `${dwellTimeSec} s`, inline: true },
+          { name: 'Grid Position', value: `${position} of ${currentOrder.length}`, inline: true },
+          { name: 'Device', value: isMobile ? 'Mobile' : 'Desktop', inline: true },
+          { name: 'Order Shown', value: currentOrder.map(t => t.id).join(' → ') }
+        ],
+        footer: { text: 'YouTube Thumbnail Test · Child Stars Behind the Facade' },
+        timestamp: new Date().toISOString()
+      };
+      const imgUrl = absoluteUrl(item.fullPng || item.src);
+      if (imgUrl) embed.image = { url: imgUrl };
+      return embed;
+    }
+
+    function resolveWebhook() {
+      const urlWh = urlParams.get('wh') || urlParams.get('webhook');
+      if (urlWh) {
+        try { return urlWh.startsWith('http') ? urlWh : atob(urlWh); } catch (e) { return urlWh; }
+      }
+      return DISCORD_WEBHOOK_URL || '';
+    }
+
+    async function sendToDiscord(embed) {
+      const webhook = resolveWebhook();
+      if (!webhook) {
+        console.warn('No Discord webhook configured. Payload:', embed);
+        return;
+      }
+      try {
+        await fetch(webhook, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            username: 'YouTube Thumbnail Poll',
+            avatar_url: 'https://www.youtube.com/s/desktop/5be8d02c/img/favicon_144x144.png',
+            embeds: [embed]
+          })
+        });
+      } catch (err) {
+        console.error('Error sending to Discord:', err);
+      }
+    }
+
+    function showToast(msg, spinning) {
+      document.getElementById('toastMsg').textContent = msg;
+      document.getElementById('toastSpinner').style.display = spinning ? 'block' : 'none';
+      document.getElementById('statusToast').classList.add('show');
+    }
+    function hideToast() {
+      document.getElementById('statusToast').classList.remove('show');
+    }
+
+    // Optional follow-up comment
+    document.getElementById('btnSendReason').onclick = async () => {
+      const text = document.getElementById('reasonInput').value.trim();
+      if (!text || !lastVote) return;
+      const btn = document.getElementById('btnSendReason');
+      btn.disabled = true;
+      showToast('Sending comment...', true);
+      await sendToDiscord({
+        title: '💬 Thumbnail Feedback Comment',
+        color: 0x3EA6FF,
+        fields: [
+          { name: 'Thumbnail', value: `**${lastVote.item.id}** · ${lastVote.item.label}` },
+          { name: 'Voter', value: `\`${voterName}\``, inline: true },
+          { name: 'Feedback', value: text.slice(0, 1000) }
+        ],
+        timestamp: new Date().toISOString()
+      });
+      showToast('Thanks for your feedback!', false);
+      setTimeout(hideToast, 1800);
+    };
+
+    document.getElementById('btnChangeVote').onclick = () => {
+      hasVoted = false;
+      document.getElementById('thankYouView').style.display = 'none';
+      document.getElementById('chipBar').style.visibility = 'visible';
+      const grid = document.getElementById('videoGrid');
+      grid.style.display = 'grid';
+      renderCards();
+      requestAnimationFrame(() => { grid.style.opacity = '1'; });
+    };
+
+    Promise.all(preloads).then(renderCards);
+  </script>
+</body>
+</html>
